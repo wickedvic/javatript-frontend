@@ -12,8 +12,10 @@ body {
   }
   
   header {
-    grid-area: top;
+    grid-area: header;
     border: 2px solid red;
+    background-color: blue;
+    color: white;
   }
   
   main {
@@ -24,4 +26,13 @@ body {
   nav {
     grid-area: nav;
     border: 2px solid green;
+    grid-auto-flow: row dense;
+    grid-auto-rows: 100px;
+  }
+
+  .section {
+    grid-auto-flow: row dense;
+    grid-auto-rows: 100px;
+    grid-template-columns: 1fr 2fr;
+        border: 2px solid purple; 
   }

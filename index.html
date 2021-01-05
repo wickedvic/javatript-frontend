@@ -5,33 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/main.css">
     <script src="./src/index.js" defer></script>
-    <title>Javatript</title>
+    <title>JavaTript</title>
 </head>
 <body>
     <header>
-        <h2>Site Title</h2>
+        <h2>JavaTript</h2>
       </header>
-      <nav>
-        <ul>
-          <li>Recipe 1</li>
-          <li>Recipe 2</li>
-          <li>Recipe 3</li>
+      <nav id="trip-bar">
+        <ul id="nav-bar">
         </ul>
+        <button id="add-new-trip">Add New Trip</button> 
       </nav>
+      <section class="section">
+        <ul>
+          <li>user 1 </li>
+          <li> user 2</li>
+        </ul>
+      </section>
       <main>
-        <img id="post-img" src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png" alt="placeholder" style="max-width: 500px;" />
         <h1 id="trip-title">Trip Title</h1>
+        <img id="post-img" src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png" alt="placeholder" style="max-width: 500px;" />
+
         <div class="info">
           <!-- <h3>Author Name</h3> -->
           <p id='post-caption'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora tempore ipsam a libero aliquam est, maxime officia et quisquam sint neque iusto reprehenderit aliquid dignissimos deserunt odit atque culpa nisi!</p>
+          <p id="likes">Likes: 0</p>
+          <button id="add-like-button">👍</button>
         </div>
         <hr />
-        <!-- <h3>Post Comments</h3>
+        <h3>Post Comments</h3>
         <ul id="post-comments">
           <li>comment 1</li>
           <li>comment 2</li>
           <li>comment 3</li>
-        </ul> -->
+        </ul>
+        <button id="add-comment-button">Add Comment</button>
       </main>
     
 </body>
