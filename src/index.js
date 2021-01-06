@@ -1,6 +1,8 @@
 /* DOM ELEMents */
 let id = 1
 
+const postComments = document.querySelector('#post-comments')
+const addCommentForm = document.querySelector('#add-comment-form')
 const addPostForm = document.querySelector('form#add-post-form')
 const postImage = document.querySelector("#post-img")
 const postCaption = document.querySelector("#post-caption")
@@ -13,6 +15,40 @@ const newTripForm = document.querySelector('form#new-trip-form')
 
 
 /* Event Handler ****/
+
+addCommentForm.addEventListener('submit', (event) => {
+    event.preventDefault()
+    console.log(event.target.comment.value)
+    const lis = event.target.comment.value
+
+    postComments.innerHTML = `
+    ${lis}
+    `
+
+  // const lis = spiceObj.ingredients.map(ingredient => {
+  //   return `<li>${ingredient.name}</li>`
+  // })
+  // spiceDetails.innerHTML = `
+  // <img class="detail-image" src="${spiceObj.image}" alt="${spiceObj.title}" />
+  // <h2 class="title">${spiceObj.title}</h2>
+
+  // <div class="ingredients-container">
+  //   <h4>Ingredients:</h4>
+  //   <ul class="ingredients-list">
+  //     ${lis.join("")}
+  //   </ul>
+  // </div>
+  // `
+})
+
+
+
+    // let li = document.createElement('li')
+
+    // li.textContent = event.target.comment.value 
+
+    // postComments.append(li)
+    
 
 
 addPostForm.addEventListener('submit', (event) => {
@@ -43,6 +79,7 @@ addPostForm.addEventListener('submit', (event) => {
             let likeP = document.createElement('p')
             let imgNew = document.createElement('img')
             let button = document.createElement('button')
+            let deleteBtn = document.createElement('button')
 
             imgNew.src = addedPostObj.img_url 
             newP.textContent = addedPostObj.caption
@@ -51,9 +88,13 @@ addPostForm.addEventListener('submit', (event) => {
 
             button.textContent = '👍'
             button.classList.add('like-button')
+            button.dataset.id = addedPostObj.id 
+            deleteBtn.classList.add('delete-post-button')
+            deleteBtn.textContent = "X"
+            deleteBtn.dataset.id = addedPostObj.id 
 
 
-            newLi.append(imgNew, newP, likeP, button)
+            newLi.append(imgNew, newP, likeP, button, deleteBtn)
             postUl.append(newLi)
 
         })
@@ -89,6 +130,21 @@ newTripForm.addEventListener('submit', (event) => {
   })
 
 postUl.addEventListener('click', (e) => {
+if(e.target.matches('.delete-post-button')) {
+    const deleteId = parseInt(e.target.dataset.id)
+    console.log(deleteId)
+
+    deletePost(deleteId)
+
+    function deletePost(deleteId) {
+    fetch(`http://localhost:3000/api/v1/posts/${deleteId}`, {
+        method: "DELETE",
+    })
+    .then(r => r.json())
+    const postGone = e.target.closest("li")
+    postGone.remove()
+    }
+}
 
 if(e.target.matches('.like-button')) {
     const likesBar = document.querySelector('p.likes')
@@ -99,18 +155,8 @@ if(e.target.matches('.like-button')) {
 
         addNewLike(newLikeObj, likeId, likesBar)
 
-
-
-
         }
     })
-    
-
-
-
-
-
-
 
     // const id = event.target.dataset.id
     // const cardDiv = event.target.closest(".card")
@@ -183,6 +229,9 @@ const renderUserDetails = userObj => {
                             let p = document.createElement('p')
                             let pLikes = document.createElement('p')
                             let button = document.createElement('button')
+                            let deleteBtn = document.createElement('button')
+                            deleteBtn.classList.add('delete-post-button')
+                            deleteBtn.textContent = "X"
                             
                             img.src = poster.img_url 
                             img.alt = poster.caption 
@@ -193,11 +242,12 @@ const renderUserDetails = userObj => {
                             button.textContent = poster.id
                             button.classList.add('like-button')
                             button.dataset.id = poster.id 
+                            deleteBtn.dataset.id = poster.id 
                             li.dataset.id = newId
                             addPostForm.dataset.id = newId
                             console.log(addPostForm.dataset.id)
                             
-                            li.append(img, p, pLikes, button)
+                            li.append(img, p, pLikes, button, deleteBtn)
                             postUl.append(li)
                         }
                     })
