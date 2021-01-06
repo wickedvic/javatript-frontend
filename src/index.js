@@ -1,8 +1,9 @@
 /* DOM ELEMents */
 let id = 1
 
+
 const postComments = document.querySelector('#post-comments')
-const addCommentForm = document.querySelector('#add-comment-form')
+// const addCommentForm = document.querySelector('#add-comment-form')
 const addPostForm = document.querySelector('form#add-post-form')
 const postImage = document.querySelector("#post-img")
 const postCaption = document.querySelector("#post-caption")
@@ -16,14 +17,72 @@ const newTripForm = document.querySelector('form#new-trip-form')
 
 /* Event Handler ****/
 
-addCommentForm.addEventListener('submit', (event) => {
+postUl.addEventListener('submit', (event) => {
+    const addCommentForm = document.querySelector('#add-comment-form')
     event.preventDefault()
-    console.log(event.target.comment.value)
-    const lis = event.target.comment.value
+    const postToAddComment = event.target.closest('li')
+    const commentPostId = parseInt(postToAddComment.dataset.id)
+    const newComment = event.target.comment.value
+    const commentUserName = event.target.username.value 
+    console.log(commentPostId)
 
-    postComments.innerHTML = `
-    ${lis}
-    `
+    let commentToAdd = {
+        username: commentUserName,
+        content: newComment,
+        post_id: commentPostId
+    }
+
+console.log(commentToAdd)
+
+    fetch('http://localhost:3000/api/v1/comments', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(commentToAdd),
+    })
+    .then((r => r.json()))
+    .then((updatedCommentObj) => {
+        console.log(updatedCommentObj)
+        let commentsUl = document.querySelector('ul.all-the-comments')
+        let li = document.createElement('li')
+
+        li.innerHTML = `${updatedCommentObj.username} says: ${updatedCommentObj.content}`
+        
+        commentsUl.append(li)
+    })
+    addCommentForm.reset()
+})
+
+
+
+
+
+// fetch('http://localhost:3000/api/v1/trips', {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+//     body:JSON.stringify(newTripObj),
+//  })    
+// .then(r => r.json())
+// .then(addedTripObj => {
+//     let newLi = document.createElement('li')
+//     newLi.textContent = `${addedTripObj.location}, ${addedTripObj.date}`
+//     tripNavBar.append(newLi)
+// })
+
+//  newTripForm.reset()
+// })
+
+
+
+
+
+
+
+
+
 
   // const lis = spiceObj.ingredients.map(ingredient => {
   //   return `<li>${ingredient.name}</li>`
@@ -39,7 +98,6 @@ addCommentForm.addEventListener('submit', (event) => {
   //   </ul>
   // </div>
   // `
-})
 
 
 
@@ -80,11 +138,14 @@ addPostForm.addEventListener('submit', (event) => {
             let imgNew = document.createElement('img')
             let button = document.createElement('button')
             let deleteBtn = document.createElement('button')
+            let commentFormDiv = document.createElement('div')
+        
 
             imgNew.src = addedPostObj.img_url 
             newP.textContent = addedPostObj.caption
             likeP.textContent = `Likes: ${addedPostObj.like}`
             likeP.classList.add('likes')
+            newLi.dataset.id = addedPostObj.id
 
             button.textContent = '👍'
             button.classList.add('like-button')
@@ -92,9 +153,35 @@ addPostForm.addEventListener('submit', (event) => {
             deleteBtn.classList.add('delete-post-button')
             deleteBtn.textContent = "X"
             deleteBtn.dataset.id = addedPostObj.id 
+            commentFormDiv.innerHTML = `
+            <form id="add-comment-form">
+<h3>Add a Comment!</h3>
+<input
+type="text"
+value=""
+name="username"
+placeholder="Please enter your username..."
+class="input-username"
+/>
+<br />
+<input
+type="text"
+value=""
+name="comment"
+placeholder="Please leave a comment..."
+class="input-text"
+/>
+<br />
+<input
+type="submit"
+name="submit"
+value="Add New Comment"
+class="submit-comment"
+/>
+</form>    <br> `
 
 
-            newLi.append(imgNew, newP, likeP, button, deleteBtn)
+            newLi.append(imgNew, newP, likeP, button, deleteBtn, commentFormDiv)
             postUl.append(newLi)
 
         })
@@ -140,16 +227,19 @@ if(e.target.matches('.delete-post-button')) {
     fetch(`http://localhost:3000/api/v1/posts/${deleteId}`, {
         method: "DELETE",
     })
-    .then(r => r.json())
+    // .then(r => r.json())
     const postGone = e.target.closest("li")
     postGone.remove()
     }
 }
 
 if(e.target.matches('.like-button')) {
-    const likesBar = document.querySelector('p.likes')
+    const postCard = e.target.closest("li")
+    const likesBar = postCard.querySelector('p.likes')
     const likeId = parseInt(e.target.dataset.id)
     const newLikeNum = parseInt(likesBar.textContent.substring(7)) + 1
+    console.log(likesBar)
+    console.log(postCard)
        console.log(newLikeNum)
        const newLikeObj = {like: newLikeNum}
 
@@ -157,6 +247,21 @@ if(e.target.matches('.like-button')) {
 
         }
     })
+
+    function addNewLike(newLikeObj, likeId, likesBar) {
+        fetch(`http://localhost:3000/api/v1/posts/${likeId}`, {
+        method: 'PATCH', 
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newLikeObj)
+     })
+     .then(r => r.json())
+     .then(updatedObj => {
+         console.log(updatedObj.like)
+         likesBar.textContent = `Likes: ${updatedObj.like}`
+     })
+    }
 
     // const id = event.target.dataset.id
     // const cardDiv = event.target.closest(".card")
@@ -232,7 +337,20 @@ const renderUserDetails = userObj => {
                             let deleteBtn = document.createElement('button')
                             deleteBtn.classList.add('delete-post-button')
                             deleteBtn.textContent = "X"
+                            let commentFormDiv = document.createElement('div')
+                            let commentsUl = document.createElement('ul')
+
+                            commentsUl.classList.add('all-the-comments')
+                            // if(poster.comments[0].content) {
+                            // commentsUl.textContent = poster.comments[0].content
+                            // }
                             
+                            poster.comments.forEach(comment => {
+                                let comLi = document.createElement('li')
+                                comLi.innerHTML = `${comment.username} says ${comment.content}`
+                                commentsUl.append(comLi)
+                            })
+
                             img.src = poster.img_url 
                             img.alt = poster.caption 
                             p.textContent = poster.caption
@@ -243,11 +361,37 @@ const renderUserDetails = userObj => {
                             button.classList.add('like-button')
                             button.dataset.id = poster.id 
                             deleteBtn.dataset.id = poster.id 
-                            li.dataset.id = newId
-                            addPostForm.dataset.id = newId
+                            li.dataset.id = poster.id
+                            addPostForm.dataset.id = poster.id 
                             console.log(addPostForm.dataset.id)
-                            
-                            li.append(img, p, pLikes, button, deleteBtn)
+                            commentFormDiv.innerHTML = `
+                            <form id="add-comment-form">
+          <h3>Add a Comment!</h3>
+          <input
+          type="text"
+          value=""
+          name="username"
+          placeholder="Please enter your username..."
+          class="input-username"
+        />
+        <br />
+          <input
+            type="text"
+            value=""
+            name="comment"
+            placeholder="Please leave a comment..."
+            class="input-text"
+          />
+          <br />
+          <input
+            type="submit"
+            name="submit"
+            value="Add New Comment"
+            class="submit-comment"
+          />
+        </form>    <br> `     
+          
+        li.append(img, p, pLikes, button, deleteBtn, commentsUl, commentFormDiv)
                             postUl.append(li)
                         }
                     })
@@ -270,21 +414,6 @@ const renderUserDetails = userObj => {
 //         renderTripDetails(tripObj)
 // }
 
-
-function addNewLike(newLikeObj, likeId, likesBar) {
-    fetch(`http://localhost:3000/api/v1/posts/${likeId}`, {
-    method: 'PATCH', 
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify(newLikeObj)
- })
- .then(r => r.json())
- .then(updatedObj => {
-     console.log(updatedObj.like)
-     likesBar.textContent = `Likes: ${updatedObj.like}`
- })
-}
 
 const getOneUser = async (id) => {
     const url = `http://localhost:3000/api/v1/users/${id}`
