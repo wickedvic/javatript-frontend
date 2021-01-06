@@ -2,6 +2,34 @@
 let id = 1
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const mainMap = document.querySelector('div#main-map')
 const postComments = document.querySelector('#post-comments')
 // const addCommentForm = document.querySelector('#add-comment-form')
 const addPostForm = document.querySelector('form#add-post-form')
@@ -211,6 +239,15 @@ newTripForm.addEventListener('submit', (event) => {
             let newLi = document.createElement('li')
             newLi.textContent = `${addedTripObj.location}, ${addedTripObj.date}`
             tripNavBar.append(newLi)
+ 
+            let newLatLong = {
+                lng: addedTripObj.longitude,
+                lat: addedTripObj.latitude
+            }
+            let marker = new mapboxgl.Marker()
+.setLngLat(newLatLong)
+.addTo(map);
+// marker.dataset.id = addedTripObj.id 
         })
         
          newTripForm.reset()
@@ -311,6 +348,22 @@ const renderUserDetails = userObj => {
     li.dataset.id = trip.id
     li.textContent = `${trip.location}, ${trip.date}`
     tripNavBar.append(li)
+    let newLatLong = {
+        lng: trip.longitude,
+        lat: trip.latitude
+    }
+        let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
+    ${trip.location}
+        `);
+    
+
+    const el = document.createElement('div');
+    el.id = 'marker'
+
+    new mapboxgl.Marker()
+.setLngLat(newLatLong)
+.setPopup(popup)
+.addTo(map);
     
     })
 
@@ -344,6 +397,7 @@ const renderUserDetails = userObj => {
                             // if(poster.comments[0].content) {
                             // commentsUl.textContent = poster.comments[0].content
                             // }
+                            
                             
                             poster.comments.forEach(comment => {
                                 let comLi = document.createElement('li')
@@ -434,3 +488,39 @@ const getOneUser = async (id) => {
 // getOneTrips(1)
 
 getOneUser(id)
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiYXNoaWxsOTkiLCJhIjoiY2tqbHYzYWtsMDM0eDJ4cDQ4M2s2dGRoYSJ9.VL1ntoM7dGFLuXB_D82EYA';
+const map = new mapboxgl.Map({
+    container: mainMap,
+    style: 'mapbox://styles/ashill99/ckjlvk9a10xqi19ohhqbngl85',
+    attributionControl: false,
+    zoom: 1,
+    center: [2.21, 46.2]
+})
+
+// const mapBox = document.querySelector('map')
+// const markerCopenhagen = new mapboxgl.Marker()
+// .setLngLat([12.550343, 55.665957])
+// .setPopup(popup)
+// .addTo(map);
+
+map.on('click', function(e) {
+    // console.log(map)
+
+
+    let features = map.queryRenderedFeatures(e.point, {});
+
+    console.log(features)
+
+      console.log('click', e.lngLat)
+        
+      if (!features.length) {
+        return;
+      }
+
+      let feature = features[0];
+      let popup = new mapboxgl.Popup({ offset: [0, -15] })
+    .setLngLat(feature.geometry.coordinates)
+    .setHTML(`<h3> Hello </h3>`)
+    .addTo(map);
+});
