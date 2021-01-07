@@ -2,8 +2,6 @@
 let id = 1
 
 
-
-
 const addPostHtml = `
 <form id="add-comment-form">
 <h3>Add a Comment!</h3>
@@ -42,6 +40,7 @@ const tripTitle = document.querySelector("#trip-title")
 const tripNavBar = document.querySelector('ul#nav-bar')
 const postUl = document.querySelector('ul#post-ul')
 const newTripForm = document.querySelector('form#new-trip-form')
+const mainTitle = document.querySelector('h2#main-title')
 
 // const postComments = document.querySelector("#post-comments")
 
@@ -98,56 +97,6 @@ console.log(commentToAdd)
     })
     addCommentForm.reset()
 })
-
-
-// fetch('http://localhost:3000/api/v1/trips', {
-//     method: 'POST',
-//     headers: {
-//         'Content-Type': 'application/json',
-//     },
-//     body:JSON.stringify(newTripObj),
-//  })    
-// .then(r => r.json())
-// .then(addedTripObj => {
-//     let newLi = document.createElement('li')
-//     newLi.textContent = `${addedTripObj.location}, ${addedTripObj.date}`
-//     tripNavBar.append(newLi)
-// })
-
-//  newTripForm.reset()
-// })
-
-
-
-
-
-
-
-
-
-
-  // const lis = spiceObj.ingredients.map(ingredient => {
-  //   return `<li>${ingredient.name}</li>`
-  // })
-  // spiceDetails.innerHTML = `
-  // <img class="detail-image" src="${spiceObj.image}" alt="${spiceObj.title}" />
-  // <h2 class="title">${spiceObj.title}</h2>
-
-  // <div class="ingredients-container">
-  //   <h4>Ingredients:</h4>
-  //   <ul class="ingredients-list">
-  //     ${lis.join("")}
-  //   </ul>
-  // </div>
-  // `
-
-
-
-    // let li = document.createElement('li')
-
-    // li.textContent = event.target.comment.value 
-
-    // postComments.append(li)
     
 addPostForm.addEventListener('submit', (event) => {
     event.preventDefault()
@@ -508,6 +457,7 @@ console.log(newId)
             addPostForm.dataset.id = newId
             console.log(addPostForm.dataset.id)
             tripTitle.innerHTML = `${trip.location}, ${trip.date} <button class="delete-trip-button" data-id="${trip.id}">Delete</button>`
+            mainTitle.textContent = trip.location 
 
             console.log(userObj)
             console.log(newId)
@@ -517,7 +467,6 @@ console.log(newId)
 
                 if(poster.trip_id === newId) {
                             console.log(poster)
-
                             let divPost = document.createElement('div')
                             
                             let divCard = document.createElement('div')
