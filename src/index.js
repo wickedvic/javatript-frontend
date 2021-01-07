@@ -244,6 +244,7 @@ addPostForm.dataset.id = newId
                 addedTripObj.posts.forEach(poster => {
 
                 if(poster.trip_id === newId) {
+    
                             console.log(poster)
                             let li = document.createElement('li')
                             let img = document.createElement('img')
@@ -334,21 +335,25 @@ if(e.target.matches('.delete-post-button')) {
 }
 
 if(e.target.matches('.like-button')) {
-    const postCard = e.target.closest("li")
-    const likesBar = postCard.querySelector('p.likes')
+    const postCard = e.target.closest("divCard")
+    const likeButton = postUl.querySelector('.like-button')
+    console.log(likeButton)
+    // const likesBar = postCard.querySelector('p.likes')
     const likeId = parseInt(e.target.dataset.id)
-    const newLikeNum = parseInt(likesBar.textContent.substring(7)) + 1
-    console.log(likesBar)
+    const newLikeNum = parseInt(likeButton.textContent.substring(2)) + 1
+    // console.log(likesBar)
+    // console.log(postCard)
     console.log(postCard)
+    console.log(likeId)
        console.log(newLikeNum)
        const newLikeObj = {like: newLikeNum}
 
-        addNewLike(newLikeObj, likeId, likesBar)
+        addNewLike(newLikeObj, likeId, likeButton)
 
         }
     })
 
-    function addNewLike(newLikeObj, likeId, likesBar) {
+    function addNewLike(newLikeObj, likeId, likeButton) {
         fetch(`http://localhost:3000/api/v1/posts/${likeId}`, {
         method: 'PATCH', 
         headers: {
@@ -359,7 +364,7 @@ if(e.target.matches('.like-button')) {
      .then(r => r.json())
      .then(updatedObj => {
          console.log(updatedObj.like)
-         likesBar.textContent = `Likes: ${updatedObj.like}`
+         likeButton.textContent = `❤️ ${updatedObj.like}`
      })
     }
 
@@ -416,6 +421,118 @@ console.log(newId)
 
                 if(poster.trip_id === newId) {
                             console.log(poster)
+
+
+
+
+
+
+
+                            let divPost = document.createElement('div')
+                            
+                            let divCard = document.createElement('div')
+                            divCard.classList.add('card')
+                            divCard.style.width = "18rem"
+
+                            let divCardBody = document.createElement('div')
+                            divCardBody.classList.add('card-body')
+
+                            let imgTop = document.createElement('img')
+                            imgTop.classList.add('card-img-top')
+
+                            imgTop.src = poster.img_url 
+                            imgTop.alt = poster.caption 
+
+                        //       <h5 class="card-title">${poster.caption}</h5>
+
+                            let h4 = document.createElement('h4')
+                            h4.classList.add('card-title')
+                            h4.textContent = poster.caption
+
+                            let likeButton = document.createElement('button')
+                            likeButton.innerHTML = `❤️ ${poster.like}`
+                            likeButton.classList.add('like-button')
+                            likeButton.dataset.id = poster.id 
+
+                            let commentsUl2 = document.createElement('ul')
+
+                            commentsUl2.classList.add('all-the-comments') 
+                            
+                            poster.comments.forEach(comment => {
+                                let comLi = document.createElement('li')
+                                comLi.innerHTML = `${comment.username} says ${comment.content}`
+                                commentsUl2.append(comLi)
+                            })
+
+                        let commentFormDiv2 = document.createElement('div')
+                          commentFormDiv2.innerHTML = `
+                          <br>
+                          <form id="add-comment-form">
+                          <p>Add a Comment!</p>
+                          <input
+                          type="text"
+                          value=""
+                          name="username"
+                          placeholder="Please enter your username..."
+                          class="input-username"
+                        />
+                        <br />
+                          <input
+                            type="text"
+                            value=""
+                            name="comment"
+                            placeholder="Please leave a comment..."
+                            class="input-text"
+                          />
+                          <br />
+                          <input
+                            type="submit"
+                            name="submit"
+                            value="Add New Comment"
+                            class="submit-comment"
+                          />
+                        </form>    <br>`
+
+                            divCardBody.append(h4, likeButton, commentsUl2, commentFormDiv2)
+                            divCard.append(imgTop, divCardBody)
+                            divPost.append(divCard)
+                            postUl.append(divPost)
+
+                            console.log(divCard)
+                        //     divPost.innerHTML = 
+                        //     `<div class="card" style="width: 18rem;">
+                        //     <img class="card-img-top" src=${poster.img_url} alt=${poster.caption}>
+                        //     <div class="card-body">
+                        //       <h5 class="card-title">${poster.caption}</h5>
+                        //       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        //       <a href="#" class="btn btn-primary">❤️ ${poster.like}</a>
+                        //       <br>
+                        //       <br>
+                        //       <a href="#" class="btn btn-primary">Delete</a>
+                              
+                        //     </div>
+                        //   </div> `
+                          
+                            // const divCardBody = document.querySelector('p.card-text')
+                            // let commentsUl2 = document.createElement('ul')
+                            
+
+                            // commentsUl2.classList.add('all-the-comments') 
+                            
+                            // poster.comments.forEach(comment => {
+                            //     let comLi = document.createElement('li')
+                            //     comLi.innerHTML = `${comment.username} says ${comment.content}`
+                            //     commentsUl2.append(comLi)
+                            // })
+                        // divPost.append(commentsUl2, commentFormDiv2, divCard)
+                        // postUl.append(divPost)
+
+
+
+
+
+
+
                             let li = document.createElement('li')
                             let img = document.createElement('img')
                             let p = document.createElement('p')
