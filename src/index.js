@@ -222,8 +222,12 @@ newTripForm.addEventListener('submit', (event) => {
                 lng: addedTripObj.longitude,
                 lat: addedTripObj.latitude
             }
+            let htmlPop = `<div class="marker-popup" data-id="${addedTripObj.id}">${addedTripObj.location} </div>`
+            let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(htmlPop)
+
             let marker = new mapboxgl.Marker()
 .setLngLat(newLatLong)
+.setPopup(popup)
 .addTo(map);
 marker.getElement().dataset.id = addedTripObj.id 
 console.log(marker)
@@ -359,36 +363,6 @@ if(e.target.matches('.like-button')) {
      })
     }
 
-    // const id = event.target.dataset.id
-    // const cardDiv = event.target.closest(".card")
-    // const likesPtag = cardDiv.querySelector("p")
-    // const newNumberOfLikes = parseInt(likesPtag.textContent) + 1
-
-    // const config = {
-    //   method: "PATCH",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json"
-    //   },
-    //   body: JSON.stringify({
-    //     likes: newNumberOfLikes
-    //   })
-    // }
-
-    // fetch(`http://localhost:3000/toys/${id}`, config)
-    //   .then(response => response.json())
-    //   .then(toyObj => {
-    //     likesPtag.textContent = `${toyObj.likes} Likes`
-    //   })
-
-
-
-
-
-
-
-
-
 /* Render ELEMents ******/
 
 const renderUserDetails = userObj => {
@@ -434,8 +408,6 @@ console.log(newId)
             console.log(addPostForm.dataset.id)
             tripTitle.innerHTML = `${trip.location}, ${trip.date} <button class="delete-trip-button" data-id="${trip.id}">Delete</button>`
 
-            
-
             console.log(userObj)
             console.log(newId)
 
@@ -455,17 +427,14 @@ console.log(newId)
                             let commentFormDiv = document.createElement('div')
                             let commentsUl = document.createElement('ul')
 
-                            commentsUl.classList.add('all-the-comments')
-                            // if(poster.comments[0].content) {
-                            // commentsUl.textContent = poster.comments[0].content
-                            // }
-                            
+                            commentsUl.classList.add('all-the-comments') 
                             
                             poster.comments.forEach(comment => {
                                 let comLi = document.createElement('li')
                                 comLi.innerHTML = `${comment.username} says ${comment.content}`
                                 commentsUl.append(comLi)
                             })
+
 
                             img.src = poster.img_url 
                             img.alt = poster.caption 
@@ -511,14 +480,12 @@ console.log(newId)
                             postUl.append(li)
                         }
                     })
-
-
 });
 
-    
 // markerPopup.addEventListener('click', e => {
 //     console.log('click')
 // })
+
     })
 
         tripNavBar.addEventListener('click', e => {
@@ -630,7 +597,6 @@ const getOneUser = async (id) => {
     renderUserDetails(userObj)
 }
 
-
 // const getOneTrip = async (id) => {
 //     const url = `http://localhost:3000/api/v1/trips/${id}`
 //     const response = await fetch(url)
@@ -712,7 +678,6 @@ console.log(markToGo)
     markToGo.remove()
     popupToGo.remove()
     popupToGo2.remove()
-    
     
 
 }
