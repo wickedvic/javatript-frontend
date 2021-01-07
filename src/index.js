@@ -126,7 +126,7 @@ addPostForm.addEventListener('submit', (event) => {
                             
                             let divCard = document.createElement('div')
                             divCard.classList.add('card')
-                            divCard.style.width = "18rem"
+                            divCard.style.width = "25rem"
 
                             let divCardBody = document.createElement('div')
                             divCardBody.classList.add('card-body')
@@ -471,7 +471,7 @@ console.log(newId)
                             
                             let divCard = document.createElement('div')
                             divCard.classList.add('card')
-                            divCard.style.width = "18rem"
+                            divCard.style.width = "25rem"
 
                             let divCardBody = document.createElement('div')
                             divCardBody.classList.add('card-body')
@@ -516,12 +516,12 @@ console.log(newId)
                           commentFormDiv2.innerHTML = `
                           <br>
                           <form id="add-comment-form">
-                          <p>Add a Comment!</p>
+                          
                           <input
                           type="text"
                           value=""
                           name="username"
-                          placeholder="Please enter your username..."
+                          placeholder="Enter your username..."
                           class="input-username"
                         />
                         <br />
@@ -529,7 +529,7 @@ console.log(newId)
                             type="text"
                             value=""
                             name="comment"
-                            placeholder="Please leave a comment..."
+                            placeholder="Enter a comment..."
                             class="input-text"
                           />
                           <br />

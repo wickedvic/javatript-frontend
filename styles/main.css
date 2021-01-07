@@ -1,3 +1,7 @@
+body{
+  color: blue;
+}
+
 /* body {
     margin: 0;
     padding: 0;
@@ -58,9 +62,79 @@
   
   header {
     padding-left: 10px;
+    padding-bottom: 29px;
     grid-area: header;
     /* border: 2px solid red;
     background-color: blue; */
     color: black;
+    font-family: 'Major Mono Display', monospace;
+    background-image: linear-gradient(to right, #9c6868, #92979c);
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
     /* padding-top: 200px; */
   }
+
+/* spacing between like and delete on post */
+  .delete-post-button{
+    margin: 10px;
+  }
+
+
+  .input-username{
+margin: 10px;
+  }
+
+  .input-text{
+    margin: 10px;
+  }
+
+  .submit-comment{
+    margin: 10px;
+  }
+
+  .card{
+    margin: 20px;
+    background-image: linear-gradient(to right, #ffffff, #161a1d);
+    font-family: 'Jura', sans-serif;
+    text-align: center;
+  float: center;
+  
+  }
+
+  .card .card-img-top {
+    /* width: 500px; */
+    /* height: 310px; */
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  img {
+    
+    width: 100%;
+    height: auto;
+  }
+  
+  .card-body{
+   
+    /* width:250px;
+    height:320px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    margin-right:10px;
+    margin-bottom: 15px;
+    float: left;  */
+
+  }
+
+  #add-post-form{
+    border: 2px solid #0b090a;
+    float:left;
+  }
+
+  #new-trip-form{
+    border: 2px solid #0b090a;
+    float:left;
+  }
+
+  
