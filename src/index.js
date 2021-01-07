@@ -52,11 +52,14 @@ postUl.addEventListener('submit', (e) => {
     e.preventDefault()
     const closeDiv = e.target.closest('div')
     // const closestUl = document.querySelector(`[data-id="${e.target.dataset.id}]`)
-    console.log(e.target)
+    console.log(closeDiv)
+    closerDiv = closeDiv.parentNode
+    const closeUl = closerDiv.querySelector('ul')
+    console.log(closeUl)
     const closestUl = e.target.closest('ul')
     const postId = closeDiv.dataset.id 
     console.log(postId)
-    const addCommentForm = document.querySelector('#add-comment-form')
+    const addCommentForm = closeDiv.querySelector('#add-comment-form')
     console.log(addCommentForm)
     const postToAddComment = e.target.closest('li')
     const commentForm = document.querySelector('.all-the-comments')
@@ -91,7 +94,7 @@ console.log(commentToAdd)
         let li = document.createElement('li')
         li.innerHTML = `${updatedCommentObj.username} says: ${updatedCommentObj.content}`
         
-        postUl.append(li)
+        closeUl.append(li)
     })
     addCommentForm.reset()
 })
