@@ -48,19 +48,32 @@ const newTripForm = document.querySelector('form#new-trip-form')
 
 /* Event Handler ****/
 
-postUl.addEventListener('submit', (event) => {
+postUl.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const closeDiv = e.target.closest('div')
+    // const closestUl = document.querySelector(`[data-id="${e.target.dataset.id}]`)
+    console.log(e.target)
+    const closestUl = e.target.closest('ul')
+    const postId = closeDiv.dataset.id 
+    console.log(postId)
     const addCommentForm = document.querySelector('#add-comment-form')
-    event.preventDefault()
-    const postToAddComment = event.target.closest('li')
-    const commentPostId = parseInt(postToAddComment.dataset.id)
-    const newComment = event.target.comment.value
-    const commentUserName = event.target.username.value 
-    console.log(commentPostId)
+    console.log(addCommentForm)
+    const postToAddComment = e.target.closest('li')
+    const commentForm = document.querySelector('.all-the-comments')
+    console.log(commentForm)
+    // const closestCommentForm = e.target.closest(commentForm)
+    // const commentPostId = parseInt(commentForm.dataset.id)
+    // console.log(commentPostId)
+    const newComment = e.target.comment.value
+    const commentUserName = e.target.username.value 
+    console.log(commentUserName)
+    console.log(newComment)
+    console.log(postId)
 
     let commentToAdd = {
         username: commentUserName,
         content: newComment,
-        post_id: commentPostId
+        post_id: postId
     }
 
 console.log(commentToAdd)
@@ -75,18 +88,13 @@ console.log(commentToAdd)
     .then((r => r.json()))
     .then((updatedCommentObj) => {
         console.log(updatedCommentObj)
-        let commentsUl = document.querySelector('ul.all-the-comments')
         let li = document.createElement('li')
-
         li.innerHTML = `${updatedCommentObj.username} says: ${updatedCommentObj.content}`
         
-        commentsUl.append(li)
+        postUl.append(li)
     })
     addCommentForm.reset()
 })
-
-
-
 
 
 // fetch('http://localhost:3000/api/v1/trips', {
@@ -138,8 +146,6 @@ console.log(commentToAdd)
 
     // postComments.append(li)
     
-
-
 addPostForm.addEventListener('submit', (event) => {
     event.preventDefault()
     let tripId = parseInt(addPostForm.dataset.id)
@@ -161,34 +167,115 @@ addPostForm.addEventListener('submit', (event) => {
          })    
         .then(r => r.json())
         .then(addedPostObj => {
-            console.log(addedPostObj)
+            console.log(addedPostObj.id)
 
-            let newLi = document.createElement('li')
-            let newP = document.createElement('p')
-            let likeP = document.createElement('p')
-            let imgNew = document.createElement('img')
-            let button = document.createElement('button')
-            let deleteBtn = document.createElement('button')
-            let commentFormDiv = document.createElement('div')
+
+            let divPost = document.createElement('div')
+                            
+                            let divCard = document.createElement('div')
+                            divCard.classList.add('card')
+                            divCard.style.width = "18rem"
+
+                            let divCardBody = document.createElement('div')
+                            divCardBody.classList.add('card-body')
+                            divCardBody.dataset.id = addedPostObj.id 
+
+                            let imgTop = document.createElement('img')
+                            imgTop.classList.add('card-img-top')
+
+                            imgTop.src = addedPostObj.img_url 
+                            imgTop.alt = addedPostObj.caption 
+
+                        //       <h5 class="card-title">${addedPostObj.caption}</h5>
+
+                            let h4 = document.createElement('h4')
+                            h4.classList.add('card-title')
+                            h4.textContent = addedPostObj.caption
+
+                            let likeButton = document.createElement('button')
+                            likeButton.innerHTML = `❤️ ${addedPostObj.like}`
+                            likeButton.classList.add('like-button')
+                            likeButton.dataset.id = addedPostObj.id 
+
+                            let deleteButton = document.createElement('button')
+                            deleteButton.classList.add('delete-post-button')
+                            deleteButton.textContent = "🗑️"
+                            deleteButton.dataset.id = addedPostObj.id 
+
+
+                            let commentsUl2 = document.createElement('ul')
+
+                            commentsUl2.classList.add('all-the-comments') 
+                            commentsUl2.dataset.id = addedPostObj.id 
+                            
+                            addedPostObj.comments.forEach(comment => {
+                                let comLi = document.createElement('li')
+                                comLi.innerHTML = `${comment.username} says ${comment.content}`
+                                commentsUl2.append(comLi)
+                            })
+
+                        let commentFormDiv2 = document.createElement('div')
+                        commentFormDiv2.dataset.id = addedPostObj.id 
+                          commentFormDiv2.innerHTML = `
+                          <br>
+                          <form id="add-comment-form" data-id="${addedPostObj.id}">
+                          <p>Add a Comment!</p>
+                          <input
+                          type="text"
+                          value=""
+                          name="username"
+                          placeholder="Please enter your username..."
+                          class="input-username"
+                        />
+                        <br />
+                          <input
+                            type="text"
+                            value=""
+                            name="comment"
+                            placeholder="Please leave a comment..."
+                            class="input-text"
+                          />
+                          <br />
+                          <input
+                          data-id="${addedPostObj.id}"
+                            type="submit"
+                            name="submit"
+                            value="Add New Comment"
+                            class="submit-comment"
+                          />
+                        </form>    <br>`
+
+                            divCardBody.append(h4, likeButton, deleteButton, commentsUl2, commentFormDiv2)
+                            divCard.append(imgTop, divCardBody)
+                            divPost.append(divCard)
+                            postUl.append(divPost)
+
+            // let newLi = document.createElement('li')
+            // let newP = document.createElement('p')
+            // let likeP = document.createElement('p')
+            // let imgNew = document.createElement('img')
+            // let button = document.createElement('button')
+            // let deleteBtn = document.createElement('button')
+            // let commentFormDiv = document.createElement('div')
         
 
-            imgNew.src = addedPostObj.img_url 
-            newP.textContent = addedPostObj.caption
-            likeP.textContent = `Likes: ${addedPostObj.like}`
-            likeP.classList.add('likes')
-            newLi.dataset.id = addedPostObj.id
+            // imgNew.src = addedPostObj.img_url 
+            // newP.textContent = addedPostObj.caption
+            // likeP.textContent = `Likes: ${addedPostObj.like}`
+            // likeP.classList.add('likes')
+            // newLi.dataset.id = addedPostObj.id
 
-            button.textContent = '👍'
-            button.classList.add('like-button')
-            button.dataset.id = addedPostObj.id 
-            deleteBtn.classList.add('delete-post-button')
-            deleteBtn.textContent = "X"
-            deleteBtn.dataset.id = addedPostObj.id 
-            commentFormDiv.innerHTML = addPostHtml
+            // button.textContent = '👍'
+            // button.classList.add('like-button')
+            // button.dataset.id = addedPostObj.id 
+            // deleteBtn.classList.add('delete-post-button')
+            // deleteBtn.textContent = "X"
+            // deleteBtn.dataset.id = addedPostObj.id 
+            // commentFormDiv.innerHTML = addPostHtml
 
 
-            newLi.append(imgNew, newP, likeP, button, deleteBtn, commentFormDiv)
-            postUl.append(newLi)
+            // newLi.append(imgNew, newP, likeP, button, deleteBtn, commentFormDiv)
+            // postUl.append(newLi)
 
         })
 
@@ -258,6 +345,8 @@ addPostForm.dataset.id = newId
                             let commentsUl = document.createElement('ul')
 
                             commentsUl.classList.add('all-the-comments')
+                            commentsUl.dataset.id = poster.id 
+                            commentFormDiv.dataset.id = poster.id 
                             
                             poster.comments.forEach(comment => {
                                 let comLi = document.createElement('li')
@@ -279,7 +368,7 @@ addPostForm.dataset.id = newId
                             addPostForm.dataset.id = poster.id 
                             console.log(addPostForm.dataset.id)
                             commentFormDiv.innerHTML = `
-                            <form id="add-comment-form">
+                            <form id="add-comment-form" data-id="${poster.id}">
           <h3>Add a Comment!</h3>
           <input
           type="text"
@@ -298,6 +387,7 @@ addPostForm.dataset.id = newId
           />
           <br />
           <input
+          data-id="${poster.id}"
             type="submit"
             name="submit"
             value="Add New Comment"
@@ -318,7 +408,8 @@ addPostForm.dataset.id = newId
   })
 
 postUl.addEventListener('click', (e) => {
-if(e.target.matches('.delete-post-button')) {
+if(e.target.matches('.delete-post-button')) { 
+    console.log(e.target)
     const deleteId = parseInt(e.target.dataset.id)
     console.log(deleteId)
 
@@ -329,26 +420,28 @@ if(e.target.matches('.delete-post-button')) {
         method: "DELETE",
     })
     // .then(r => r.json())
-    const postGone = e.target.closest("li")
+    const postGone = e.target.closest("div")
+    const alsoPostGone = postGone.closest('div.card')
     postGone.remove()
+    alsoPostGone.remove()
     }
 }
 
 if(e.target.matches('.like-button')) {
-    const postCard = e.target.closest("divCard")
-    const likeButton = postUl.querySelector('.like-button')
+    console.log(e.target)
+    const divCardBody = e.target.closest("div")
+    const likeButton = divCardBody.querySelector('.like-button')
     console.log(likeButton)
-    // const likesBar = postCard.querySelector('p.likes')
-    const likeId = parseInt(e.target.dataset.id)
-    const newLikeNum = parseInt(likeButton.textContent.substring(2)) + 1
-    // console.log(likesBar)
-    // console.log(postCard)
-    console.log(postCard)
-    console.log(likeId)
-       console.log(newLikeNum)
-       const newLikeObj = {like: newLikeNum}
 
-        addNewLike(newLikeObj, likeId, likeButton)
+    const likeId = parseInt(divCardBody.dataset.id)
+    const newLikeNum = parseInt(likeButton.textContent.substring(2)) + 1
+
+    console.log(divCardBody)    
+    console.log(likeId)
+    console.log(newLikeNum)
+    const newLikeObj = {like: newLikeNum}
+
+    addNewLike(newLikeObj, likeId, likeButton)
 
         }
     })
@@ -422,12 +515,6 @@ console.log(newId)
                 if(poster.trip_id === newId) {
                             console.log(poster)
 
-
-
-
-
-
-
                             let divPost = document.createElement('div')
                             
                             let divCard = document.createElement('div')
@@ -436,6 +523,7 @@ console.log(newId)
 
                             let divCardBody = document.createElement('div')
                             divCardBody.classList.add('card-body')
+                            divCardBody.dataset.id = poster.id 
 
                             let imgTop = document.createElement('img')
                             imgTop.classList.add('card-img-top')
@@ -454,9 +542,16 @@ console.log(newId)
                             likeButton.classList.add('like-button')
                             likeButton.dataset.id = poster.id 
 
+                            let deleteButton = document.createElement('button')
+                            deleteButton.classList.add('delete-post-button')
+                            deleteButton.textContent = "🗑️"
+                            deleteButton.dataset.id = poster.id 
+
+
                             let commentsUl2 = document.createElement('ul')
 
                             commentsUl2.classList.add('all-the-comments') 
+                            commentsUl2.dataset.id = poster.id  
                             
                             poster.comments.forEach(comment => {
                                 let comLi = document.createElement('li')
@@ -465,6 +560,7 @@ console.log(newId)
                             })
 
                         let commentFormDiv2 = document.createElement('div')
+                        commentFormDiv2.dataset.id = poster.id 
                           commentFormDiv2.innerHTML = `
                           <br>
                           <form id="add-comment-form">
@@ -493,7 +589,7 @@ console.log(newId)
                           />
                         </form>    <br>`
 
-                            divCardBody.append(h4, likeButton, commentsUl2, commentFormDiv2)
+                            divCardBody.append(h4, likeButton, deleteButton, commentsUl2, commentFormDiv2)
                             divCard.append(imgTop, divCardBody)
                             divPost.append(divCard)
                             postUl.append(divPost)
@@ -533,68 +629,68 @@ console.log(newId)
 
 
 
-                            let li = document.createElement('li')
-                            let img = document.createElement('img')
-                            let p = document.createElement('p')
-                            let pLikes = document.createElement('p')
-                            let button = document.createElement('button')
-                            let deleteBtn = document.createElement('button')
-                            deleteBtn.classList.add('delete-post-button')
-                            deleteBtn.textContent = "X"
-                            let commentFormDiv = document.createElement('div')
-                            let commentsUl = document.createElement('ul')
+        //                     let li = document.createElement('li')
+        //                     let img = document.createElement('img')
+        //                     let p = document.createElement('p')
+        //                     let pLikes = document.createElement('p')
+        //                     let button = document.createElement('button')
+        //                     let deleteBtn = document.createElement('button')
+        //                     deleteBtn.classList.add('delete-post-button')
+        //                     deleteBtn.textContent = "X"
+        //                     let commentFormDiv = document.createElement('div')
+        //                     let commentsUl = document.createElement('ul')
 
-                            commentsUl.classList.add('all-the-comments') 
+        //                     commentsUl.classList.add('all-the-comments') 
                             
-                            poster.comments.forEach(comment => {
-                                let comLi = document.createElement('li')
-                                comLi.innerHTML = `${comment.username} says ${comment.content}`
-                                commentsUl.append(comLi)
-                            })
+        //                     poster.comments.forEach(comment => {
+        //                         let comLi = document.createElement('li')
+        //                         comLi.innerHTML = `${comment.username} says ${comment.content}`
+        //                         commentsUl.append(comLi)
+        //                     })
 
 
-                            img.src = poster.img_url 
-                            img.alt = poster.caption 
-                            p.textContent = poster.caption
-                            pLikes.textContent = `Likes: ${poster.like}`
-                            pLikes.classList.add('likes')
-                            // button.textContent = '👍'
-                            button.textContent = poster.id
-                            button.classList.add('like-button')
-                            button.dataset.id = poster.id 
-                            deleteBtn.dataset.id = poster.id 
-                            li.dataset.id = poster.id
-                            addPostForm.dataset.id = poster.id 
-                            console.log(addPostForm.dataset.id)
-                            commentFormDiv.innerHTML = `
-                            <form id="add-comment-form">
-          <h3>Add a Comment!</h3>
-          <input
-          type="text"
-          value=""
-          name="username"
-          placeholder="Please enter your username..."
-          class="input-username"
-        />
-        <br />
-          <input
-            type="text"
-            value=""
-            name="comment"
-            placeholder="Please leave a comment..."
-            class="input-text"
-          />
-          <br />
-          <input
-            type="submit"
-            name="submit"
-            value="Add New Comment"
-            class="submit-comment"
-          />
-        </form>    <br> `     
+        //                     img.src = poster.img_url 
+        //                     img.alt = poster.caption 
+        //                     p.textContent = poster.caption
+        //                     pLikes.textContent = `Likes: ${poster.like}`
+        //                     pLikes.classList.add('likes')
+        //                     // button.textContent = '👍'
+        //                     button.textContent = poster.id
+        //                     button.classList.add('like-button')
+        //                     button.dataset.id = poster.id 
+        //                     deleteBtn.dataset.id = poster.id 
+        //                     li.dataset.id = poster.id
+        //                     addPostForm.dataset.id = poster.id 
+        //                     console.log(addPostForm.dataset.id)
+        //                     commentFormDiv.innerHTML = `
+        //                     <form id="add-comment-form">
+        //   <h3>Add a Comment!</h3>
+        //   <input
+        //   type="text"
+        //   value=""
+        //   name="username"
+        //   placeholder="Please enter your username..."
+        //   class="input-username"
+        // />
+        // <br />
+        //   <input
+        //     type="text"
+        //     value=""
+        //     name="comment"
+        //     placeholder="Please leave a comment..."
+        //     class="input-text"
+        //   />
+        //   <br />
+        //   <input
+        //     type="submit"
+        //     name="submit"
+        //     value="Add New Comment"
+        //     class="submit-comment"
+        //   />
+        // </form>    <br> `     
           
-        li.append(img, p, pLikes, button, deleteBtn, commentsUl, commentFormDiv)
-                            postUl.append(li)
+        // li.append(img, p, pLikes, button, deleteBtn, commentsUl, commentFormDiv)
+        //                     postUl.append(li)
                         }
                     })
 });
