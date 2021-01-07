@@ -4,29 +4,32 @@ let id = 1
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const addPostHtml = `
+<form id="add-comment-form">
+<h3>Add a Comment!</h3>
+<input
+type="text"
+value=""
+name="username"
+placeholder="Please enter your username..."
+class="input-username"
+/>
+<br />
+<input
+type="text"
+value=""
+name="comment"
+placeholder="Please leave a comment..."
+class="input-text"
+/>
+<br />
+<input
+type="submit"
+name="submit"
+value="Add New Comment"
+class="submit-comment"
+/>
+</form>    <br> `     
 
 
 const mainMap = document.querySelector('div#main-map')
@@ -181,32 +184,7 @@ addPostForm.addEventListener('submit', (event) => {
             deleteBtn.classList.add('delete-post-button')
             deleteBtn.textContent = "X"
             deleteBtn.dataset.id = addedPostObj.id 
-            commentFormDiv.innerHTML = `
-            <form id="add-comment-form">
-<h3>Add a Comment!</h3>
-<input
-type="text"
-value=""
-name="username"
-placeholder="Please enter your username..."
-class="input-username"
-/>
-<br />
-<input
-type="text"
-value=""
-name="comment"
-placeholder="Please leave a comment..."
-class="input-text"
-/>
-<br />
-<input
-type="submit"
-name="submit"
-value="Add New Comment"
-class="submit-comment"
-/>
-</form>    <br> `
+            commentFormDiv.innerHTML = addPostHtml
 
 
             newLi.append(imgNew, newP, likeP, button, deleteBtn, commentFormDiv)
@@ -247,9 +225,90 @@ newTripForm.addEventListener('submit', (event) => {
             let marker = new mapboxgl.Marker()
 .setLngLat(newLatLong)
 .addTo(map);
-// marker.dataset.id = addedTripObj.id 
+marker.getElement().dataset.id = addedTripObj.id 
+console.log(marker)
+marker.getElement().addEventListener('click', function (e) { console.log("marker clicked");
+let newId = parseInt(addedTripObj.id)
+addPostForm.dataset.id = newId
+            console.log(addPostForm.dataset.id)
+            tripTitle.innerHTML = `${addedTripObj.location}, ${addedTripObj.date}`
+
+            // console.log(userObj)
+            console.log(newId)
+
+            postUl.innerHTML = ''
+                addedTripObj.posts.forEach(poster => {
+
+                if(poster.trip_id === newId) {
+                            console.log(poster)
+                            let li = document.createElement('li')
+                            let img = document.createElement('img')
+                            let p = document.createElement('p')
+                            let pLikes = document.createElement('p')
+                            let button = document.createElement('button')
+                            let deleteBtn = document.createElement('button')
+                            deleteBtn.classList.add('delete-post-button')
+                            deleteBtn.textContent = "X"
+                            let commentFormDiv = document.createElement('div')
+                            let commentsUl = document.createElement('ul')
+
+                            commentsUl.classList.add('all-the-comments')
+                            
+                            poster.comments.forEach(comment => {
+                                let comLi = document.createElement('li')
+                                comLi.innerHTML = `${comment.username} says ${comment.content}`
+                                commentsUl.append(comLi)
+                            })
+
+                            img.src = poster.img_url 
+                            img.alt = poster.caption 
+                            p.textContent = poster.caption
+                            pLikes.textContent = `Likes: ${poster.like}`
+                            pLikes.classList.add('likes')
+                            // button.textContent = '👍'
+                            button.textContent = poster.id
+                            button.classList.add('like-button')
+                            button.dataset.id = poster.id 
+                            deleteBtn.dataset.id = poster.id 
+                            li.dataset.id = poster.id
+                            addPostForm.dataset.id = poster.id 
+                            console.log(addPostForm.dataset.id)
+                            commentFormDiv.innerHTML = `
+                            <form id="add-comment-form">
+          <h3>Add a Comment!</h3>
+          <input
+          type="text"
+          value=""
+          name="username"
+          placeholder="Please enter your username..."
+          class="input-username"
+        />
+        <br />
+          <input
+            type="text"
+            value=""
+            name="comment"
+            placeholder="Please leave a comment..."
+            class="input-text"
+          />
+          <br />
+          <input
+            type="submit"
+            name="submit"
+            value="Add New Comment"
+            class="submit-comment"
+          />
+        </form>    <br> `     
+          
+        li.append(img, p, pLikes, button, deleteBtn, commentsUl, commentFormDiv)
+                            postUl.append(li)
+                        }
+                    })
+
+});
+
         })
-        
+
          newTripForm.reset()
   })
 
@@ -352,19 +411,114 @@ const renderUserDetails = userObj => {
         lng: trip.longitude,
         lat: trip.latitude
     }
-        let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
-    ${trip.location}
-        `);
+
+    let htmlPop = `<div class="marker-popup" data-id="${trip.id}">${trip.location} </div>`
+
+        let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(htmlPop)
     
 
     const el = document.createElement('div');
     el.id = 'marker'
 
-    new mapboxgl.Marker()
+   let marker = new mapboxgl.Marker()
 .setLngLat(newLatLong)
 .setPopup(popup)
 .addTo(map);
+marker.getElement().dataset.id = trip.id 
+
+// marker.dataset.id = trip.id 
+marker.getElement().addEventListener('click', function (e) { console.log("marker clicked");
+let newId = parseInt(trip.id)
+console.log(newId)
+            addPostForm.dataset.id = newId
+            console.log(addPostForm.dataset.id)
+            tripTitle.innerHTML = `${trip.location}, ${trip.date} <button class="delete-trip-button" data-id="${trip.id}">Delete</button>`
+
+            
+
+            console.log(userObj)
+            console.log(newId)
+
+            postUl.innerHTML = ''
+                userObj.posts.forEach(poster => {
+
+                if(poster.trip_id === newId) {
+                            console.log(poster)
+                            let li = document.createElement('li')
+                            let img = document.createElement('img')
+                            let p = document.createElement('p')
+                            let pLikes = document.createElement('p')
+                            let button = document.createElement('button')
+                            let deleteBtn = document.createElement('button')
+                            deleteBtn.classList.add('delete-post-button')
+                            deleteBtn.textContent = "X"
+                            let commentFormDiv = document.createElement('div')
+                            let commentsUl = document.createElement('ul')
+
+                            commentsUl.classList.add('all-the-comments')
+                            // if(poster.comments[0].content) {
+                            // commentsUl.textContent = poster.comments[0].content
+                            // }
+                            
+                            
+                            poster.comments.forEach(comment => {
+                                let comLi = document.createElement('li')
+                                comLi.innerHTML = `${comment.username} says ${comment.content}`
+                                commentsUl.append(comLi)
+                            })
+
+                            img.src = poster.img_url 
+                            img.alt = poster.caption 
+                            p.textContent = poster.caption
+                            pLikes.textContent = `Likes: ${poster.like}`
+                            pLikes.classList.add('likes')
+                            // button.textContent = '👍'
+                            button.textContent = poster.id
+                            button.classList.add('like-button')
+                            button.dataset.id = poster.id 
+                            deleteBtn.dataset.id = poster.id 
+                            li.dataset.id = poster.id
+                            addPostForm.dataset.id = poster.id 
+                            console.log(addPostForm.dataset.id)
+                            commentFormDiv.innerHTML = `
+                            <form id="add-comment-form">
+          <h3>Add a Comment!</h3>
+          <input
+          type="text"
+          value=""
+          name="username"
+          placeholder="Please enter your username..."
+          class="input-username"
+        />
+        <br />
+          <input
+            type="text"
+            value=""
+            name="comment"
+            placeholder="Please leave a comment..."
+            class="input-text"
+          />
+          <br />
+          <input
+            type="submit"
+            name="submit"
+            value="Add New Comment"
+            class="submit-comment"
+          />
+        </form>    <br> `     
+          
+        li.append(img, p, pLikes, button, deleteBtn, commentsUl, commentFormDiv)
+                            postUl.append(li)
+                        }
+                    })
+
+
+});
+
     
+// markerPopup.addEventListener('click', e => {
+//     console.log('click')
+// })
     })
 
         tripNavBar.addEventListener('click', e => {
@@ -501,26 +655,72 @@ const map = new mapboxgl.Map({
 // const mapBox = document.querySelector('map')
 // const markerCopenhagen = new mapboxgl.Marker()
 // .setLngLat([12.550343, 55.665957])
-// .setPopup(popup)
+// // .setPopup(popup)
 // .addTo(map);
 
-map.on('click', function(e) {
-    // console.log(map)
 
+// mainMap.addEventListener('click', e => {
+//     console.log(e.target)
+// })
 
-    let features = map.queryRenderedFeatures(e.point, {});
+// map.on('click', function(e) {
+//     console.log(e.target)
 
-    console.log(features)
+//     // if(e.target.matches('.marker-popup')) {
+//     //     console.log('clicked correct')
+//     // }
 
-      console.log('click', e.lngLat)
+//     let features = map.queryRenderedFeatures(e.point, {});
+
+//     console.log(features)
+
+//       console.log('click', e.lngLat)
         
-      if (!features.length) {
-        return;
-      }
+//       if (!features.length) {
+//         return;
+//       }
 
-      let feature = features[0];
-      let popup = new mapboxgl.Popup({ offset: [0, -15] })
-    .setLngLat(feature.geometry.coordinates)
-    .setHTML(`<h3> Hello </h3>`)
-    .addTo(map);
-});
+//       let feature = features[0];
+//       let popup = new mapboxgl.Popup({ offset: [0, -15] })
+//     .setLngLat(feature.geometry.coordinates)
+//     .setHTML(`<h3> Hello </h3>`)
+//     .addTo(map);
+// });
+
+
+
+tripTitle.addEventListener('click', e => {
+    if(e.target.matches('.delete-trip-button')) {
+    const divDelete = document.querySelector('.delete-trip-button')
+    const deleteId = parseInt(e.target.dataset.id)
+    console.log(divDelete)
+    console.log(deleteId)
+
+    const tripTitleDelete = e.target.closest('h1')
+
+console.log(mainMap)
+// .mapboxgl-marker mapboxgl-marker-anchor-center
+let markToGo = document.querySelector(`div[data-id="${deleteId}"]`)
+let popupToGo = document.querySelector('div.marker-popup')
+let popupToGo2 = document.querySelector('div.mapboxgl-popup-content')
+// let markToGo = document.querySelector('div[aria-label="Map marker"')
+console.log(markToGo)
+    deleteTrip(deleteId)
+    tripTitleDelete.innerHTML = ""
+    postUl.innerHTML = ""
+    addPostForm.innerHTML = ""
+    markToGo.remove()
+    popupToGo.remove()
+    popupToGo2.remove()
+    
+    
+
+}
+}
+)
+
+function deleteTrip(deleteId) {
+    fetch(`http://localhost:3000/api/v1/trips/${deleteId}`, {
+        method: "DELETE",
+    })
+    }
