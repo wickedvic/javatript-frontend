@@ -60,7 +60,6 @@ class="submit-comment"
 
 const mainMap = document.querySelector('div#main-map')
 const postComments = document.querySelector('#post-comments')
-// const addCommentForm = document.querySelector('#add-comment-form')
 const addPostForm = document.querySelector('form#add-post-form')
 const postImage = document.querySelector("#post-img")
 const postCaption = document.querySelector("#post-caption")
@@ -70,7 +69,6 @@ const postUl = document.querySelector('ul#post-ul')
 const newTripForm = document.querySelector('form#new-trip-form')
 const mainTitle = document.querySelector('h2#main-title')
 
-// const postComments = document.querySelector("#post-comments")
 
 
 /* Event Handler ****/
@@ -78,7 +76,6 @@ const mainTitle = document.querySelector('h2#main-title')
 postUl.addEventListener('submit', (e) => {
     e.preventDefault()
     const closeDiv = e.target.closest('div')
-    // const closestUl = document.querySelector(`[data-id="${e.target.dataset.id}]`)
     console.log(closeDiv)
     closerDiv = closeDiv.parentNode
     const closeUl = closerDiv.querySelector('ul')
@@ -91,9 +88,7 @@ postUl.addEventListener('submit', (e) => {
     const postToAddComment = e.target.closest('li')
     const commentForm = document.querySelector('.all-the-comments')
     console.log(commentForm)
-    // const closestCommentForm = e.target.closest(commentForm)
-    // const commentPostId = parseInt(commentForm.dataset.id)
-    // console.log(commentPostId)
+
     const newComment = e.target.comment.value
     const commentUserName = e.target.username.value 
     console.log(commentUserName)
@@ -229,34 +224,6 @@ addPostForm.addEventListener('submit', (event) => {
                             divCard.append(imgTop, divCardBody)
                             divPost.append(divCard)
                             postUl.append(divPost)
-
-            // let newLi = document.createElement('li')
-            // let newP = document.createElement('p')
-            // let likeP = document.createElement('p')
-            // let imgNew = document.createElement('img')
-            // let button = document.createElement('button')
-            // let deleteBtn = document.createElement('button')
-            // let commentFormDiv = document.createElement('div')
-        
-
-            // imgNew.src = addedPostObj.img_url 
-            // newP.textContent = addedPostObj.caption
-            // likeP.textContent = `Likes: ${addedPostObj.like}`
-            // likeP.classList.add('likes')
-            // newLi.dataset.id = addedPostObj.id
-
-            // button.textContent = '👍'
-            // button.classList.add('like-button')
-            // button.dataset.id = addedPostObj.id 
-            // deleteBtn.classList.add('delete-post-button')
-            // deleteBtn.textContent = "X"
-            // deleteBtn.dataset.id = addedPostObj.id 
-            // commentFormDiv.innerHTML = addPostHtml
-
-
-            // newLi.append(imgNew, newP, likeP, button, deleteBtn, commentFormDiv)
-            // postUl.append(newLi)
-
         })
 
          addPostForm.reset()
@@ -320,11 +287,7 @@ newTripForm.addEventListener('submit', (event) => {
 
 
           console.log(addedTripObj)
-//    let postPopupPic = addedTripObj.posts.forEach(post => {
-//         return post.img_url
-//     })
 
-// console.log(postPopupPic)
             let postCaptionLink = document.querySelector('#post-content')
             let htmlPop = `<a href="#post-div"><div class="marker-popup" data-id="${addedTripObj.id}">${addedTripObj.location} <br> ${addedTripObj.date} </div></a>`
             let popup = new mapboxgl.Popup({ offset: 25, closeButton: false }).setHTML(htmlPop)
@@ -487,10 +450,6 @@ const renderUserDetails = userObj => {
 
     userObj.trips.forEach(trip => {
 
-    // let li = document.createElement("li")
-    // li.dataset.id = trip.id
-    // li.textContent = `${trip.location}, ${trip.date}`
-    // tripNavBar.append(li)
     let newLatLong = {
         lng: trip.longitude,
         lat: trip.latitude
@@ -521,11 +480,6 @@ const renderUserDetails = userObj => {
   </form>`
 
   console.log(trip)
-//    let postPopupPic = trip.posts.forEach(post => {
-//         return post.img_url
-//     })
-
-// console.log(postPopupPic)
 
 let htmlPop = `<a href="#post-div"><div class="marker-popup" data-id="${trip.id}">${trip.location} <br> ${trip.date}</div></a>`
 
@@ -538,11 +492,10 @@ let htmlPop = `<a href="#post-div"><div class="marker-popup" data-id="${trip.id}
 .addTo(map);
 marker.getElement().dataset.id = trip.id 
 
-// marker.dataset.id = trip.id 
 marker.getElement().addEventListener('click', function (e) { console.log("marker clicked");
 
 let newId = parseInt(trip.id)
-// displayPostImage(newId)
+
 console.log(newId)
 addPostForm.innerHTML = addRealPostHtml
 
@@ -575,8 +528,6 @@ addPostForm.innerHTML = addRealPostHtml
 
                             imgTop.src = poster.img_url 
                             imgTop.alt = poster.caption 
-
-                        //       <h5 class="card-title">${poster.caption}</h5>
 
                             let h4 = document.createElement('h4')
                             h4.classList.add('card-title')
@@ -640,208 +591,14 @@ addPostForm.innerHTML = addRealPostHtml
                             postUl.append(divPost)
 
                             console.log(divCard)
-                        //     divPost.innerHTML = 
-                        //     `<div class="card" style="width: 18rem;">
-                        //     <img class="card-img-top" src=${poster.img_url} alt=${poster.caption}>
-                        //     <div class="card-body">
-                        //       <h5 class="card-title">${poster.caption}</h5>
-                        //       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        //       <a href="#" class="btn btn-primary">❤️ ${poster.like}</a>
-                        //       <br>
-                        //       <br>
-                        //       <a href="#" class="btn btn-primary">Delete</a>
-                              
-                        //     </div>
-                        //   </div> `
-                          
-                            // const divCardBody = document.querySelector('p.card-text')
-                            // let commentsUl2 = document.createElement('ul')
-                            
-
-                            // commentsUl2.classList.add('all-the-comments') 
-                            
-                            // poster.comments.forEach(comment => {
-                            //     let comLi = document.createElement('li')
-                            //     comLi.innerHTML = `${comment.username} says ${comment.content}`
-                            //     commentsUl2.append(comLi)
-                            // })
-                        // divPost.append(commentsUl2, commentFormDiv2, divCard)
-                        // postUl.append(divPost)
-
-
-        //                     let li = document.createElement('li')
-        //                     let img = document.createElement('img')
-        //                     let p = document.createElement('p')
-        //                     let pLikes = document.createElement('p')
-        //                     let button = document.createElement('button')
-        //                     let deleteBtn = document.createElement('button')
-        //                     deleteBtn.classList.add('delete-post-button')
-        //                     deleteBtn.textContent = "X"
-        //                     let commentFormDiv = document.createElement('div')
-        //                     let commentsUl = document.createElement('ul')
-
-        //                     commentsUl.classList.add('all-the-comments') 
-                            
-        //                     poster.comments.forEach(comment => {
-        //                         let comLi = document.createElement('li')
-        //                         comLi.innerHTML = `${comment.username} says ${comment.content}`
-        //                         commentsUl.append(comLi)
-        //                     })
-
-
-        //                     img.src = poster.img_url 
-        //                     img.alt = poster.caption 
-        //                     p.textContent = poster.caption
-        //                     pLikes.textContent = `Likes: ${poster.like}`
-        //                     pLikes.classList.add('likes')
-        //                     // button.textContent = '👍'
-        //                     button.textContent = poster.id
-        //                     button.classList.add('like-button')
-        //                     button.dataset.id = poster.id 
-        //                     deleteBtn.dataset.id = poster.id 
-        //                     li.dataset.id = poster.id
-        //                     addPostForm.dataset.id = poster.id 
-        //                     console.log(addPostForm.dataset.id)
-        //                     commentFormDiv.innerHTML = `
-        //                     <form id="add-comment-form">
-        //   <h3>Add a Comment!</h3>
-        //   <input
-        //   type="text"
-        //   value=""
-        //   name="username"
-        //   placeholder="Please enter your username..."
-        //   class="input-username"
-        // />
-        // <br />
-        //   <input
-        //     type="text"
-        //     value=""
-        //     name="comment"
-        //     placeholder="Please leave a comment..."
-        //     class="input-text"
-        //   />
-        //   <br />
-        //   <input
-        //     type="submit"
-        //     name="submit"
-        //     value="Add New Comment"
-        //     class="submit-comment"
-        //   />
-        // </form>    <br> `     
-          
-        // li.append(img, p, pLikes, button, deleteBtn, commentsUl, commentFormDiv)
-        //                     postUl.append(li)
                         }
                     })
 });
-
-// markerPopup.addEventListener('click', e => {
-//     console.log('click')
-// })
-
     })
 
-    //     tripNavBar.addEventListener('click', e => {
-    //     if(e.target.matches('li')) {
-    //         let newId = parseInt(e.target.dataset.id)
-    //         addPostForm.dataset.id = newId
-    //         console.log(addPostForm.dataset.id)
-    //         tripTitle.textContent = e.target.textContent
-
-    //         console.log(userObj)
-    //         console.log(newId)
-
-    //         postUl.innerHTML = ''
-    //             userObj.posts.forEach(poster => {
-
-    //             if(poster.trip_id === newId) {
-    //                         console.log(poster)
-    //                         let li = document.createElement('li')
-    //                         let img = document.createElement('img')
-    //                         let p = document.createElement('p')
-    //                         let pLikes = document.createElement('p')
-    //                         let button = document.createElement('button')
-    //                         let deleteBtn = document.createElement('button')
-    //                         deleteBtn.classList.add('delete-post-button')
-    //                         deleteBtn.textContent = "X"
-    //                         let commentFormDiv = document.createElement('div')
-    //                         let commentsUl = document.createElement('ul')
-
-    //                         commentsUl.classList.add('all-the-comments')
-    //                         // if(poster.comments[0].content) {
-    //                         // commentsUl.textContent = poster.comments[0].content
-    //                         // }
-                            
-                            
-    //                         poster.comments.forEach(comment => {
-    //                             let comLi = document.createElement('li')
-    //                             comLi.innerHTML = `${comment.username} says ${comment.content}`
-    //                             commentsUl.append(comLi)
-    //                         })
-
-    //                         img.src = poster.img_url 
-    //                         img.alt = poster.caption 
-    //                         p.textContent = poster.caption
-    //                         pLikes.textContent = `Likes: ${poster.like}`
-    //                         pLikes.classList.add('likes')
-    //                         // button.textContent = '👍'
-    //                         button.textContent = poster.id
-    //                         button.classList.add('like-button')
-    //                         button.dataset.id = poster.id 
-    //                         deleteBtn.dataset.id = poster.id 
-    //                         li.dataset.id = poster.id
-    //                         addPostForm.dataset.id = poster.id 
-    //                         console.log(addPostForm.dataset.id)
-    //                         commentFormDiv.innerHTML = `
-    //                         <form id="add-comment-form">
-    //       <h3>Add a Comment!</h3>
-    //       <input
-    //       type="text"
-    //       value=""
-    //       name="username"
-    //       placeholder="Please enter your username..."
-    //       class="input-username"
-    //     />
-    //     <br />
-    //       <input
-    //         type="text"
-    //         value=""
-    //         name="comment"
-    //         placeholder="Please leave a comment..."
-    //         class="input-text"
-    //       />
-    //       <br />
-    //       <input
-    //         type="submit"
-    //         name="submit"
-    //         value="Add New Comment"
-    //         class="submit-comment"
-    //       />
-    //     </form>    <br> `     
-          
-    //     li.append(img, p, pLikes, button, deleteBtn, commentsUl, commentFormDiv)
-    //                         postUl.append(li)
-    //                     }
-    //                 })
-    //     }
-    // })
 }
 
 /* Fetch ELEMents */
-
-// const getOneTrip = id => {
-//     fetch(`http://localhost:3000/api/v1/trips/${id}`)
-//     .then(r => r.json())
-//     .then(console.log)
-// }
-
-// const getAllTrips = async (id) => {
-//     const url = `http://localhost:3000/api/v1/trips`
-//         const response = await fetch(url)
-//         const tripObj = await response.json()
-//         renderTripDetails(tripObj)
-// }
-
 
 const getOneUser = async (id) => {
     const url = `http://localhost:3000/api/v1/users/${id}`
@@ -850,15 +607,7 @@ const getOneUser = async (id) => {
     renderUserDetails(userObj)
 }
 
-// const getOneTrip = async (id) => {
-//     const url = `http://localhost:3000/api/v1/trips/${id}`
-//     const response = await fetch(url)
-//     const tripObj = await response.json()
-//     renderTripDetails(tripObj)
-// }
-
 /* Initial ELEMents */
-// getOneTrips(1)
 
 getOneUser(id)
 
