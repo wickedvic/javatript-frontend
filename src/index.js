@@ -1,7 +1,6 @@
 /* DOM ELEMents */
 let id = 1
 
-
 const addPostHtml = `
 <form id="add-comment-form">
 <h3>Add a Comment!</h3>
@@ -420,10 +419,10 @@ const renderUserDetails = userObj => {
 
     userObj.trips.forEach(trip => {
 
-    let li = document.createElement("li")
-    li.dataset.id = trip.id
-    li.textContent = `${trip.location}, ${trip.date}`
-    tripNavBar.append(li)
+    // let li = document.createElement("li")
+    // li.dataset.id = trip.id
+    // li.textContent = `${trip.location}, ${trip.date}`
+    // tripNavBar.append(li)
     let newLatLong = {
         lng: trip.longitude,
         lat: trip.latitude
