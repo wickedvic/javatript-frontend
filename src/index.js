@@ -298,7 +298,7 @@ newTripForm.addEventListener('submit', (event) => {
 // console.log(postPopupPic)
 
             let htmlPop = `<div class="marker-popup" data-id="${addedTripObj.id}">${addedTripObj.location} </div>`
-            let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(htmlpop)
+            let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(htmlPop)
 
             let marker = new mapboxgl.Marker()
 .setLngLat(newLatLong)
@@ -415,6 +415,7 @@ if(e.target.matches('.delete-post-button')) {
     }
 }
 
+
 if(e.target.matches('.like-button')) {
     console.log(e.target)
     const divCardBody = e.target.closest("div")
@@ -513,7 +514,7 @@ console.log(newId)
             addPostForm.dataset.id = newId
             console.log(addPostForm.dataset.id)
             console.log(mainTitle)
-            tripTitle.innerHTML = `${trip.location}, ${trip.date} <button class="delete-trip-button" data-id="${trip.id}">🗑️</button>`
+            tripTitle.innerHTML = `${trip.location}, ${trip.date} <button class="delete-trip-button" onclick="return confirm('Are you sure you want to delete this item?');" data-id="${trip.id}">🗑️</button>`
             mainTitle.textContent = trip.location 
 
             console.log(userObj)
@@ -906,3 +907,12 @@ function deleteTrip(deleteId) {
         method: "DELETE",
     })
     }
+
+    // function ConfirmDelete()
+    // {
+    //   var x = confirm("Are you sure you want to delete?");
+    //   if (x)
+    //       return true;
+    //   else
+    //     return false;
+    // }
