@@ -253,9 +253,10 @@ newTripForm.addEventListener('submit', (event) => {
          })    
         .then(r => r.json())
         .then(addedTripObj => {
-            let newLi = document.createElement('li')
-            newLi.textContent = `${addedTripObj.location}, ${addedTripObj.date}`
-            tripNavBar.append(newLi)
+
+            tripTitle.innerHTML = `${addedTripObj.location}, ${addedTripObj.date} <button class="delete-trip-button" data-id="${addedTripObj.id}">Delete</button>`
+            console.log(tripTitle)
+            // tripNavBar.append(newLi)
  
             let newLatLong = {
                 lng: addedTripObj.longitude,
@@ -274,7 +275,7 @@ marker.getElement().addEventListener('click', function (e) { console.log("marker
 let newId = parseInt(addedTripObj.id)
 addPostForm.dataset.id = newId
             console.log(addPostForm.dataset.id)
-            tripTitle.innerHTML = `${addedTripObj.location}, ${addedTripObj.date}`
+            tripTitle.innerHTML = `${addedTripObj.location}, ${addedTripObj.date} <button class="delete-trip-button" data-id="${addedTripObj.id}">Delete</button>`
 
             // console.log(userObj)
             console.log(newId)
@@ -416,14 +417,6 @@ if(e.target.matches('.like-button')) {
 /* Render ELEMents ******/
 
 const renderUserDetails = userObj => {
-
-    // userObj.posts.forEach(post => {
-    //         postImage.src = userObj.posts[0].img_url
-    //     })
-
-    // tripTitle.textContent = `TRIP: ${userObj.trips[0].location}`
-
-    // postCaption.textContent = `Post: ${userObj.posts[0].caption}`
 
     userObj.trips.forEach(trip => {
 
