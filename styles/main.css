@@ -1,5 +1,6 @@
 body{
-  color: blue;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url("https://media.istockphoto.com/vectors/seamless-tropical-pattern-with-palm-trees-vector-id513792828?k=6&m=513792828&s=170667a&w=0&h=Me9YX6im5sJH2RbKJARJ-hsh9kTmAt0XKTeejj0eSzc=");
+
 }
 
 /* body {
@@ -55,8 +56,8 @@ body{
   #main-map {
     /* border: 2px solid yellow; */
     position:absolute;
-    top:10%; 
-    bottom:10%; 
+    top:5%; 
+    bottom:5%; 
     width:100%;
   }
   
@@ -68,7 +69,7 @@ body{
     background-color: blue; */
     color: black;
     font-family: 'Major Mono Display', monospace;
-    background-image: linear-gradient(to right, #9c6868, #92979c);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url("https://media.istockphoto.com/vectors/seamless-tropical-pattern-with-palm-trees-vector-id513792828?k=6&m=513792828&s=170667a&w=0&h=Me9YX6im5sJH2RbKJARJ-hsh9kTmAt0XKTeejj0eSzc=");
     text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
     /* padding-top: 200px; */
   }
