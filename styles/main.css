@@ -96,7 +96,7 @@ margin: 10px;
     background-image: linear-gradient(to right, #ffffff, #161a1d);
     font-family: 'Jura', sans-serif;
     text-align: center;
-  float: right;
+  float: left;
   
   }
 
@@ -128,11 +128,26 @@ margin: 10px;
   }
 
   #add-post-form{
-    border: 2px solid #0b090a;
-    float:left;
+    /* border: 2px solid #0b090a;
+   float:initial;
+    
     margin-left: 25px;
     margin-top: 50px;
-    padding: 1em;
+    padding: 1em; */
+   
+    /* width: -100px;
+  height: -100px;
+  background-color: #FFD7C2;
+  position: absolute;
+  bottom: 100px;
+  right: 20px; */
+  width: -100px;
+    height: -100px;
+    background-color: #FFD7C2;
+    position: absolute;
+    bottom: -450px;
+    right: 50px;
+    padding: 0.4em;
    
   }
 
@@ -141,11 +156,27 @@ margin-left: 10px;
   }
 
   #new-trip-form{
-    border: 2px solid #0b090a;
-    float:left;
+    /* border: 2px solid #0b090a;
+    float:right;
     margin-left: 25px;
     margin-top: 50px;
+    padding: 1em; */
+    width: -100px;
+    height: -100px;
+    background-color: #FFD7C2;
+    position: absolute;
+    bottom: -252px;
+    right: 50px;
     padding: 1em;
   }
 
   
+  #trip-title{
+    font-family: 'Major Mono Display', monospace;
+  }
+
+  #trip-title .delete-trip-button{
+    background-color:transparent;
+    border: none;
+    
+  }
