@@ -1,7 +1,10 @@
 body{
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url("https://media.istockphoto.com/vectors/seamless-tropical-pattern-with-palm-trees-vector-id513792828?k=6&m=513792828&s=170667a&w=0&h=Me9YX6im5sJH2RbKJARJ-hsh9kTmAt0XKTeejj0eSzc=");
+  background-image: url("https://media.istockphoto.com/vectors/seamless-tropical-pattern-with-palm-trees-vector-id513792828?k=6&m=513792828&s=170667a&w=0&h=Me9YX6im5sJH2RbKJARJ-hsh9kTmAt0XKTeejj0eSzc=");
 }
 
+#whitespace {
+  margin-bottom: -50rem;
+}
 /* body {
     margin: 0;
     padding: 0;
@@ -55,8 +58,8 @@ body{
   #main-map {
     /* border: 2px solid yellow; */
     position:absolute;
-    top:5%; 
-    bottom:5%; 
+    top:6%; 
+    bottom:0; 
     width:100%;
   }
   
@@ -153,7 +156,6 @@ margin: 10px;
     border-radius: 5px;
     color: black;
 
-   
   }
 
   #add-post-form .submit{
@@ -174,6 +176,7 @@ margin-left: 10px;
     right: 50px;
     padding: 1em;
     border-radius: 5px;
+    font-family: 'Open Sans Condensed', sans-serif;
   
   }
 
@@ -181,16 +184,23 @@ margin-left: 10px;
   #trip-title{
     font-family: 'Major Mono Display', monospace;
     color: white;
+    /* font-size: large; */
+    -webkit-text-stroke-width: 0.8px;
+    -webkit-text-stroke-color: black;
   }
 
   #trip-title .delete-trip-button{
     background-color:transparent;
     border: none;
+    font-size: small;
     
   }
 
   .mapboxgl-popup-content .marker-popup {
-    background-color: black;
+    color: green; 
+    font-family: Arial;
+    font-style: bold;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
     /* background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url("https://media.istockphoto.com/vectors/seamless-tropical-pattern-with-palm-trees-vector-id513792828?k=6&m=513792828&s=170667a&w=0&h=Me9YX6im5sJH2RbKJARJ-hsh9kTmAt0XKTeejj0eSzc="); */
   }
 

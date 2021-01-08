@@ -2,6 +2,34 @@
 /* DOM ELEMents */
 let id = 1
 
+const addRealPostHtml = ` <form id="add-post-form">
+<h4>Add a Post</h4>
+
+<input
+  type="text"
+  value=""
+  name="caption"
+  placeholder="Caption..."
+  class="input-text"
+/>
+<br />
+<input
+  type="text"
+  value=""
+  name="img_url"
+  placeholder="Image URL..."
+  class="input-text"
+/>
+<br/>
+<input
+  type="submit"
+  name="submit"
+  value="Post"
+  class="submit"
+/>
+</form>`
+
+
 const addPostHtml = `
 <form id="add-comment-form">
 <h3>Add a Comment!</h3>
@@ -253,8 +281,9 @@ newTripForm.addEventListener('submit', (event) => {
          })    
         .then(r => r.json())
         .then(addedTripObj => {
+            mainTitle.innerText = addedTripObj.location
 
-            tripTitle.innerHTML = `${addedTripObj.location}, ${addedTripObj.date} <button class="delete-trip-button" data-id="${addedTripObj.id}">🗑️</button>`
+            tripTitle.innerHTML = `${addedTripObj.location}, ${addedTripObj.date} <button class="delete-trip-button" onclick="return confirm('Are you sure you want to delete this item?')" data-id="${addedTripObj.id}">🗑️</button>`
             console.log(tripTitle)
             // tripNavBar.append(newLi)
  
@@ -296,9 +325,9 @@ newTripForm.addEventListener('submit', (event) => {
 //     })
 
 // console.log(postPopupPic)
-
-            let htmlPop = `<div class="marker-popup" data-id="${addedTripObj.id}">${addedTripObj.location} </div>`
-            let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(htmlPop)
+            let postCaptionLink = document.querySelector('#post-content')
+            let htmlPop = `<a href="#post-div"><div class="marker-popup" data-id="${addedTripObj.id}">${addedTripObj.location} <br> ${addedTripObj.date} </div></a>`
+            let popup = new mapboxgl.Popup({ offset: 25, closeButton: false }).setHTML(htmlPop)
 
             let marker = new mapboxgl.Marker()
 .setLngLat(newLatLong)
@@ -309,8 +338,9 @@ console.log(marker)
 marker.getElement().addEventListener('click', function (e) { console.log("marker clicked");
 let newId = parseInt(addedTripObj.id)
 addPostForm.dataset.id = newId
+addPostForm.innerHTML = addRealPostHtml
             console.log(addPostForm.dataset.id)
-            tripTitle.innerHTML = `${addedTripObj.location}, ${addedTripObj.date} <button class="delete-trip-button" data-id="${addedTripObj.id}">🗑️</button>`
+            tripTitle.innerHTML = `${addedTripObj.location}, ${addedTripObj.date} <button class="delete-trip-button" class="delete" onclick="return confirm('Are you sure you want to delete this item')" data-id="${addedTripObj.id}">🗑️</button>`
 
             // console.log(userObj)
             console.log(newId)
@@ -402,6 +432,7 @@ if(e.target.matches('.delete-post-button')) {
     console.log(deleteId)
 
     deletePost(deleteId)
+
 
     function deletePost(deleteId) {
     fetch(`http://localhost:3000/api/v1/posts/${deleteId}`, {
@@ -496,7 +527,7 @@ const renderUserDetails = userObj => {
 
 // console.log(postPopupPic)
 
-    let htmlPop = `<div class="marker-popup" data-id="${trip.id}">${trip.location} </div>`
+let htmlPop = `<a href="#post-div"><div class="marker-popup" data-id="${trip.id}">${trip.location} <br> ${trip.date}</div></a>`
 
     
         let popup = new mapboxgl.Popup({ offset: 25, closeButton: false, }).setHTML(htmlPop)
@@ -509,12 +540,16 @@ marker.getElement().dataset.id = trip.id
 
 // marker.dataset.id = trip.id 
 marker.getElement().addEventListener('click', function (e) { console.log("marker clicked");
+
 let newId = parseInt(trip.id)
+// displayPostImage(newId)
 console.log(newId)
+addPostForm.innerHTML = addRealPostHtml
+
             addPostForm.dataset.id = newId
             console.log(addPostForm.dataset.id)
             console.log(mainTitle)
-            tripTitle.innerHTML = `${trip.location}, ${trip.date} <button class="delete-trip-button" onclick="return confirm('Are you sure you want to delete this item?');" data-id="${trip.id}">🗑️</button>`
+            tripTitle.innerHTML = `${trip.location}, ${trip.date} <button class="delete-trip-button" <adata-id= href="#" title="delete" class="delete" onclick="return confirm('Are you sure you want to delete this item')" data-id="${trip.id}">🗑️</button>`
             mainTitle.textContent = trip.location 
 
             console.log(userObj)
@@ -568,7 +603,7 @@ console.log(newId)
                                 comLi.innerHTML = `${comment.username} says ${comment.content}`
                                 commentsUl2.append(comLi)
                             })
-
+ 
                         let commentFormDiv2 = document.createElement('div')
                         commentFormDiv2.dataset.id = poster.id 
                           commentFormDiv2.innerHTML = `
@@ -916,3 +951,21 @@ function deleteTrip(deleteId) {
     //   else
     //     return false;
     // }
+
+
+    // map.on('click', addMarker);
+
+    // function addMarker(e){
+    //     console.log(e.target)
+    // //   if (typeof circleMarker !== "undefined" ){ 
+    // //     map.removeLayer(circleMarker);         
+    // //   }
+    //   //add marker
+    //   let marker = new mapboxgl.Marker()
+    //   .setLngLat(e.lngLat)
+    // //   .setPopup(popup)
+    //   .addTo(map);
+    // //   marker.getElement().dataset.id = trip.id 
+    // }
+
+   
