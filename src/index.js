@@ -254,7 +254,7 @@ newTripForm.addEventListener('submit', (event) => {
         .then(r => r.json())
         .then(addedTripObj => {
 
-            tripTitle.innerHTML = `${addedTripObj.location}, ${addedTripObj.date} <button class="delete-trip-button" data-id="${addedTripObj.id}">Delete</button>`
+            tripTitle.innerHTML = `${addedTripObj.location}, ${addedTripObj.date} <button class="delete-trip-button" data-id="${addedTripObj.id}">🗑️</button>`
             console.log(tripTitle)
             // tripNavBar.append(newLi)
  
@@ -275,7 +275,7 @@ marker.getElement().addEventListener('click', function (e) { console.log("marker
 let newId = parseInt(addedTripObj.id)
 addPostForm.dataset.id = newId
             console.log(addPostForm.dataset.id)
-            tripTitle.innerHTML = `${addedTripObj.location}, ${addedTripObj.date} <button class="delete-trip-button" data-id="${addedTripObj.id}">Delete</button>`
+            tripTitle.innerHTML = `${addedTripObj.location}, ${addedTripObj.date} <button class="delete-trip-button" data-id="${addedTripObj.id}">🗑️</button>`
 
             // console.log(userObj)
             console.log(newId)
@@ -449,7 +449,7 @@ let newId = parseInt(trip.id)
 console.log(newId)
             addPostForm.dataset.id = newId
             console.log(addPostForm.dataset.id)
-            tripTitle.innerHTML = `${trip.location}, ${trip.date} <button class="delete-trip-button" data-id="${trip.id}">Delete</button>`
+            tripTitle.innerHTML = `${trip.location}, ${trip.date} <button class="delete-trip-button" data-id="${trip.id}">🗑️</button>`
             mainTitle.textContent = trip.location 
 
             console.log(userObj)
