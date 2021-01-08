@@ -449,6 +449,7 @@ let newId = parseInt(trip.id)
 console.log(newId)
             addPostForm.dataset.id = newId
             console.log(addPostForm.dataset.id)
+            console.log(mainTitle)
             tripTitle.innerHTML = `${trip.location}, ${trip.date} <button class="delete-trip-button" data-id="${trip.id}">🗑️</button>`
             mainTitle.textContent = trip.location 
 
