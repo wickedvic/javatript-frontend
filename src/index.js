@@ -262,8 +262,43 @@ newTripForm.addEventListener('submit', (event) => {
                 lng: addedTripObj.longitude,
                 lat: addedTripObj.latitude
             }
+            let popupPostForm = `   <form id="add-post-form">
+            <h3>Add a Post!</h3>
+    
+            <input
+              type="text"
+              value=""
+              name="caption"
+              placeholder="Caption your Post..."
+              class="input-text"
+            />
+            <br />
+            <input
+              type="text"
+              value=""
+              name="img_url"
+              placeholder="Enter an image URL..."
+              class="input-text"
+            />
+            <br />
+            <input
+              type="submit"
+              name="submit"
+              value="Add New Post"
+              class="submit"
+            />
+          </form>`
+
+
+          console.log(addedTripObj)
+//    let postPopupPic = addedTripObj.posts.forEach(post => {
+//         return post.img_url
+//     })
+
+// console.log(postPopupPic)
+
             let htmlPop = `<div class="marker-popup" data-id="${addedTripObj.id}">${addedTripObj.location} </div>`
-            let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(htmlPop)
+            let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(htmlpop)
 
             let marker = new mapboxgl.Marker()
 .setLngLat(newLatLong)
@@ -429,14 +464,42 @@ const renderUserDetails = userObj => {
         lat: trip.latitude
     }
 
+    let popupPostForm = `   <form>
+    <h3>Add a Post!</h3>
+
+    <input
+      type="text"
+      value=""
+      name="caption"
+      placeholder="Caption your Post..."
+    />
+    <br />
+    <input
+      type="text"
+      value=""
+      name="img_url"
+      placeholder="Enter an image URL..."
+    />
+    <br />
+    <input
+      type="submit"
+      name="submit"
+      value="Add New Post"
+    />
+  </form>`
+
+  console.log(trip)
+//    let postPopupPic = trip.posts.forEach(post => {
+//         return post.img_url
+//     })
+
+// console.log(postPopupPic)
+
     let htmlPop = `<div class="marker-popup" data-id="${trip.id}">${trip.location} </div>`
 
+    
         let popup = new mapboxgl.Popup({ offset: 25, closeButton: false, }).setHTML(htmlPop)
     
-
-    const el = document.createElement('div');
-    el.id = 'marker'
-
    let marker = new mapboxgl.Marker()
 .setLngLat(newLatLong)
 .setPopup(popup)

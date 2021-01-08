@@ -1,6 +1,5 @@
 body{
   background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url("https://media.istockphoto.com/vectors/seamless-tropical-pattern-with-palm-trees-vector-id513792828?k=6&m=513792828&s=170667a&w=0&h=Me9YX6im5sJH2RbKJARJ-hsh9kTmAt0XKTeejj0eSzc=");
-
 }
 
 /* body {
@@ -67,7 +66,7 @@ body{
     grid-area: header;
     /* border: 2px solid red;
     background-color: blue; */
-    color: black;
+    color: white;
     font-family: 'Major Mono Display', monospace;
     background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url("https://media.istockphoto.com/vectors/seamless-tropical-pattern-with-palm-trees-vector-id513792828?k=6&m=513792828&s=170667a&w=0&h=Me9YX6im5sJH2RbKJARJ-hsh9kTmAt0XKTeejj0eSzc=");
     text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
@@ -144,11 +143,14 @@ margin: 10px;
   right: 20px; */
   width: -100px;
     height: -100px;
-    background-color: #FFD7C2;
+    background-color: rgba(255, 215, 194, 0.8);
     position: absolute;
     bottom: -450px;
     right: 50px;
     padding: 0.4em;
+    border-radius: 5px;
+    color: black;
+
    
   }
 
@@ -164,16 +166,19 @@ margin-left: 10px;
     padding: 1em; */
     width: -100px;
     height: -100px;
-    background-color: #FFD7C2;
+    background-color: rgba(255, 215, 194, 0.8);
     position: absolute;
     bottom: -252px;
     right: 50px;
     padding: 1em;
+    border-radius: 5px;
+  
   }
 
   
   #trip-title{
     font-family: 'Major Mono Display', monospace;
+    color: white;
   }
 
   #trip-title .delete-trip-button{
@@ -181,3 +186,9 @@ margin-left: 10px;
     border: none;
     
   }
+
+  .mapboxgl-popup-content .marker-popup {
+    background-color: black;
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url("https://media.istockphoto.com/vectors/seamless-tropical-pattern-with-palm-trees-vector-id513792828?k=6&m=513792828&s=170667a&w=0&h=Me9YX6im5sJH2RbKJARJ-hsh9kTmAt0XKTeejj0eSzc="); */
+  }
+
