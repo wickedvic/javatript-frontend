@@ -136,6 +136,10 @@ margin: 10px;
    
   }
 
+  #add-post-form .submit{
+margin-left: 10px;
+  }
+
   #new-trip-form{
     border: 2px solid #0b090a;
     float:left;
