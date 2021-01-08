@@ -1,3 +1,4 @@
+
 /* DOM ELEMents */
 let id = 1
 
@@ -430,7 +431,7 @@ const renderUserDetails = userObj => {
 
     let htmlPop = `<div class="marker-popup" data-id="${trip.id}">${trip.location} </div>`
 
-        let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(htmlPop)
+        let popup = new mapboxgl.Popup({ offset: 25, closeButton: false, }).setHTML(htmlPop)
     
 
     const el = document.createElement('div');
@@ -568,11 +569,6 @@ console.log(newId)
                         // postUl.append(divPost)
 
 
-
-
-
-
-
         //                     let li = document.createElement('li')
         //                     let img = document.createElement('img')
         //                     let p = document.createElement('p')
@@ -645,90 +641,90 @@ console.log(newId)
 
     })
 
-        tripNavBar.addEventListener('click', e => {
-        if(e.target.matches('li')) {
-            let newId = parseInt(e.target.dataset.id)
-            addPostForm.dataset.id = newId
-            console.log(addPostForm.dataset.id)
-            tripTitle.textContent = e.target.textContent
+    //     tripNavBar.addEventListener('click', e => {
+    //     if(e.target.matches('li')) {
+    //         let newId = parseInt(e.target.dataset.id)
+    //         addPostForm.dataset.id = newId
+    //         console.log(addPostForm.dataset.id)
+    //         tripTitle.textContent = e.target.textContent
 
-            console.log(userObj)
-            console.log(newId)
+    //         console.log(userObj)
+    //         console.log(newId)
 
-            postUl.innerHTML = ''
-                userObj.posts.forEach(poster => {
+    //         postUl.innerHTML = ''
+    //             userObj.posts.forEach(poster => {
 
-                if(poster.trip_id === newId) {
-                            console.log(poster)
-                            let li = document.createElement('li')
-                            let img = document.createElement('img')
-                            let p = document.createElement('p')
-                            let pLikes = document.createElement('p')
-                            let button = document.createElement('button')
-                            let deleteBtn = document.createElement('button')
-                            deleteBtn.classList.add('delete-post-button')
-                            deleteBtn.textContent = "X"
-                            let commentFormDiv = document.createElement('div')
-                            let commentsUl = document.createElement('ul')
+    //             if(poster.trip_id === newId) {
+    //                         console.log(poster)
+    //                         let li = document.createElement('li')
+    //                         let img = document.createElement('img')
+    //                         let p = document.createElement('p')
+    //                         let pLikes = document.createElement('p')
+    //                         let button = document.createElement('button')
+    //                         let deleteBtn = document.createElement('button')
+    //                         deleteBtn.classList.add('delete-post-button')
+    //                         deleteBtn.textContent = "X"
+    //                         let commentFormDiv = document.createElement('div')
+    //                         let commentsUl = document.createElement('ul')
 
-                            commentsUl.classList.add('all-the-comments')
-                            // if(poster.comments[0].content) {
-                            // commentsUl.textContent = poster.comments[0].content
-                            // }
+    //                         commentsUl.classList.add('all-the-comments')
+    //                         // if(poster.comments[0].content) {
+    //                         // commentsUl.textContent = poster.comments[0].content
+    //                         // }
                             
                             
-                            poster.comments.forEach(comment => {
-                                let comLi = document.createElement('li')
-                                comLi.innerHTML = `${comment.username} says ${comment.content}`
-                                commentsUl.append(comLi)
-                            })
+    //                         poster.comments.forEach(comment => {
+    //                             let comLi = document.createElement('li')
+    //                             comLi.innerHTML = `${comment.username} says ${comment.content}`
+    //                             commentsUl.append(comLi)
+    //                         })
 
-                            img.src = poster.img_url 
-                            img.alt = poster.caption 
-                            p.textContent = poster.caption
-                            pLikes.textContent = `Likes: ${poster.like}`
-                            pLikes.classList.add('likes')
-                            // button.textContent = '👍'
-                            button.textContent = poster.id
-                            button.classList.add('like-button')
-                            button.dataset.id = poster.id 
-                            deleteBtn.dataset.id = poster.id 
-                            li.dataset.id = poster.id
-                            addPostForm.dataset.id = poster.id 
-                            console.log(addPostForm.dataset.id)
-                            commentFormDiv.innerHTML = `
-                            <form id="add-comment-form">
-          <h3>Add a Comment!</h3>
-          <input
-          type="text"
-          value=""
-          name="username"
-          placeholder="Please enter your username..."
-          class="input-username"
-        />
-        <br />
-          <input
-            type="text"
-            value=""
-            name="comment"
-            placeholder="Please leave a comment..."
-            class="input-text"
-          />
-          <br />
-          <input
-            type="submit"
-            name="submit"
-            value="Add New Comment"
-            class="submit-comment"
-          />
-        </form>    <br> `     
+    //                         img.src = poster.img_url 
+    //                         img.alt = poster.caption 
+    //                         p.textContent = poster.caption
+    //                         pLikes.textContent = `Likes: ${poster.like}`
+    //                         pLikes.classList.add('likes')
+    //                         // button.textContent = '👍'
+    //                         button.textContent = poster.id
+    //                         button.classList.add('like-button')
+    //                         button.dataset.id = poster.id 
+    //                         deleteBtn.dataset.id = poster.id 
+    //                         li.dataset.id = poster.id
+    //                         addPostForm.dataset.id = poster.id 
+    //                         console.log(addPostForm.dataset.id)
+    //                         commentFormDiv.innerHTML = `
+    //                         <form id="add-comment-form">
+    //       <h3>Add a Comment!</h3>
+    //       <input
+    //       type="text"
+    //       value=""
+    //       name="username"
+    //       placeholder="Please enter your username..."
+    //       class="input-username"
+    //     />
+    //     <br />
+    //       <input
+    //         type="text"
+    //         value=""
+    //         name="comment"
+    //         placeholder="Please leave a comment..."
+    //         class="input-text"
+    //       />
+    //       <br />
+    //       <input
+    //         type="submit"
+    //         name="submit"
+    //         value="Add New Comment"
+    //         class="submit-comment"
+    //       />
+    //     </form>    <br> `     
           
-        li.append(img, p, pLikes, button, deleteBtn, commentsUl, commentFormDiv)
-                            postUl.append(li)
-                        }
-                    })
-        }
-    })
+    //     li.append(img, p, pLikes, button, deleteBtn, commentsUl, commentFormDiv)
+    //                         postUl.append(li)
+    //                     }
+    //                 })
+    //     }
+    // })
 }
 
 /* Fetch ELEMents */
